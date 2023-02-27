@@ -18,7 +18,7 @@ import (
 )
 
 var runningEncodes int = 0
-var maxRunningEncodes int = 1
+var maxRunningEncodes int = 2
 
 func StartEncode() {
 	for true {
@@ -109,7 +109,7 @@ func runEncode(encodingTask models.Quality) {
 
 func TempSock(totalDuration float64, encodingTask *models.Quality) string {
 	rand.Seed(time.Now().Unix())
-	sockFileName := path.Join(os.TempDir(), fmt.Sprintf("%d_sock", rand.Int()))
+	sockFileName := path.Join(os.TempDir(), fmt.Sprintf("%s_%vx%v_%d_sock", encodingTask.File.UUID, encodingTask.Width, encodingTask.Height, rand.Int()))
 	l, err := net.Listen("unix", sockFileName)
 	if err != nil {
 		panic(err)
